@@ -6,10 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex" />
   <title>Алексей Петрачук</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
   <style>
     html,
     body {
@@ -32,49 +34,61 @@
     }
 
     .nav-link.active {
-    transform: translateX(10px);
-    transition: transform 0.2s ease-in-out;
-  }
-
-  @media (min-width: 992px) {
-    .split-left {
-      height: auto;
-      max-height: none;
-      position: fixed;
-      width: calc(50% - 1rem);
-      max-width: 540px;
+      transform: translateX(10px);
+      transition: transform 0.2s ease-in-out;
     }
 
-    .split-right {
-      margin-left: 50%;
-    }
-  }
+    @media (min-width: 992px) {
+      .split-left {
+        height: auto;
+        max-height: none;
+        position: fixed;
+        width: calc(50% - 1rem);
+        max-width: 540px;
+      }
 
-  @media (max-width: 991.98px) {
-    .split-left {
-      position: relative;
-      width: 100%;
-      min-height: 0;
+      .split-right {
+        margin-left: 50%;
+      }
+
+      .header-responsive {
+        opacity: 0%;
+      }
     }
-  }
+
+    @media (max-width: 991.98px) {
+      .split-left {
+        position: relative;
+        width: 100%;
+        min-height: 0;
+      }
+
+      .header-responsive {
+        opacity: 100%;
+      }
+    }
 
     .active {
       font-weight: 800;
     }
-
   </style>
 </head>
 
 <body>
   <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
     <symbol id="github" viewBox="0 0 16 16">
-      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+      <path
+        d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+      </path>
     </symbol>
     <symbol id="linkedin" viewBox="0 0 24 24">
-      <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"></path>
+      <path
+        d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z">
+      </path>
     </symbol>
     <symbol id="telegram" viewBox="0 0 24 24">
-      <path d="m12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12c0-6.627-5.373-12-12-12zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
+      <path
+        d="m12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12c0-6.627-5.373-12-12-12zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z" />
     </symbol>
   </svg>
 
@@ -83,12 +97,12 @@
       <!-- Левый блок -->
       <div id="leftBlock" class="col-12 col-lg-6 split-left d-flex align-items-left justify-content-top">
         <div>
-          <div class="pt-5 px-5 ms-lg-3 ms-0">
+          <div class="pt-5 px-3 ms-lg-3 ms-0">
             <h1>Петрачук&nbsp;Алексей</h1>
             <h2>Backend&nbsp;Developer</h2>
-            <p>Инженер-программист, специализирующийся на создании и проектировании серверных приложений.</p>
+            <p>Инженер-программист, специализирующийся на<br />создании и проектировании серверных приложений</p>
           </div>
-          <div id="nav" class="nav flex-column text-uppercase px-5 py-3 d-none d-lg-block">
+          <div id="nav" class="nav flex-column text-uppercase px-3 py-5 d-none d-lg-block">
             <a class="nav-link text-body py-1 active" href="#about">Обо мне</a>
             <a class="nav-link text-body py-1" href="#experience">Опыт</a>
             <a class="nav-link text-body py-1" href="#projects">Проекты</a>
@@ -96,7 +110,7 @@
             <a class="nav-link text-body py-1" href="#simple-list-item-5">Item 5</a>
           </div>
         </div>
-        <div class="mt-lg-auto px-5 pb-5 ms-lg-3 ms-0">
+        <div class="mt-lg-auto px-3 pb-5 ms-lg-3 ms-0">
           <ul class="nav col-md-4 list-unstyled d-flex">
             <li>
               <a href="https://github.com/petrachuk" target="_blank">
@@ -124,20 +138,175 @@
       </div>
 
       <!-- Правый блок -->
-      <div id="rightBlock" class="col-12 col-lg-6 split-right" data-bs-spy="scroll" data-bs-target="#nav" data-bs-offset="0" data-bs-smooth-scroll="true" tabindex="0">
-        <h4 id="about" class="px-5 pt-5">Обо мне</h4>
-        <p class="px-5">Я backend-разработчик, увлеченный созданием высоконагруженных серверных приложений, которые сочетают надежную архитектуру, производительность и масштабируемость. Мне особенно нравится работать над решениями, которые обеспечивают стабильность и эффективность, даже при экстремальных нагрузках, и разрабатывать системы, способные обрабатывать миллионы запросов с минимальной задержкой.</p>
-        <p class="px-5">В настоящее время я работаю Руководителем Центра интеграции данных в <a href="https://www.rsb.ru/" target="_blank">Банке Русский Стандарт</a>, специализируясь на проектировании и оптимизации серверной инфраструктуры. Я участвую в создании и поддержке интеграций, которые являются основой платформы БРС.Инспектор, обеспечивая их соответствие лучшим практикам производительности, безопасности и надежности.</p>
-        <p class="px-5">Ранее я имел возможность разрабатывать серверные решения в самых разных командах&nbsp;&mdash; от крупных корпораций и стартапов до небольших команд, работающих над цифровыми продуктами.</p>
-        <p class="px-5">В свободное время я увлекаюсь чтением технической литературы, бегом и велосипедом, провожу время с женой и детьми или совершенствую личные проекты в области программирования.</p>
-        <h4 id="experience" class="px-5">Опыт</h4>
-        <p class="px-5">Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur? At vero eos et accusamus et iusto odio dignissimos ducimus, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint, obcaecati cupiditate non provident, similique sunt in culpa, qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio, cumque nihil impedit, quo minus id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet, ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
-        <h4 id="projects" class="px-5">Проекты</h4>
-        <p class="px-5">Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur? At vero eos et accusamus et iusto odio dignissimos ducimus, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint, obcaecati cupiditate non provident, similique sunt in culpa, qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio, cumque nihil impedit, quo minus id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet, ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
-        <h4 id="simple-list-item-4" class="px-5">Item 4</h4>
-        <p class="px-5">Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur? At vero eos et accusamus et iusto odio dignissimos ducimus, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint, obcaecati cupiditate non provident, similique sunt in culpa, qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio, cumque nihil impedit, quo minus id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet, ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
-        <h4 id="simple-list-item-5" class="px-5">Item 5</h4>
-        <p class="px-5 pb-5">Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur? At vero eos et accusamus et iusto odio dignissimos ducimus, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint, obcaecati cupiditate non provident, similique sunt in culpa, qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio, cumque nihil impedit, quo minus id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet, ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
+      <div id="rightBlock" class="col-12 col-lg-6 split-right" data-bs-spy="scroll" data-bs-target="#nav"
+        data-bs-offset="0" data-bs-smooth-scroll="true" tabindex="0">
+        <h3 id="about" class="header-responsive p-3">Обо мне</h4>
+          <p class="px-3">Я backend-разработчик, увлеченный созданием высоконагруженных серверных приложений, которые
+            сочетают надежную архитектуру, производительность и масштабируемость. Мне особенно нравится работать над
+            решениями, которые обеспечивают стабильность и эффективность, даже при экстремальных нагрузках, и
+            разрабатывать системы, способные обрабатывать миллионы запросов с минимальной задержкой.</p>
+          <p class="px-3">В настоящее время я работаю Руководителем Центра интеграции данных в <a
+              href="https://www.rsb.ru/" target="_blank">Банке Русский Стандарт</a>, специализируясь на проектировании и
+            оптимизации серверной инфраструктуры. Я участвую в создании и поддержке интеграций, которые являются основой
+            платформы БРС.Инспектор, обеспечивая их соответствие лучшим практикам производительности, безопасности и
+            надежности.</p>
+          <p class="px-3">Ранее я имел возможность разрабатывать серверные решения в самых разных командах&nbsp;&mdash;
+            от <a href="https://sbertech.ru/" target="_blank">крупных корпораций</a> и стартапов до небольших команд,
+            работающих над цифровыми продуктами.</p>
+          <p class="px-3">В свободное время я увлекаюсь чтением технической литературы, бегом и велосипедом, провожу
+            время с женой и детьми или совершенствую личные проекты в области программирования.</p>
+          <h3 id="experience" class="header-responsive p-3">Опыт</h4>
+            <div>
+              <div class="row px-3">
+                <div class="col-3">Март 2022&nbsp;&mdash; по наст. время</div>
+                <div class="col-9">
+                  <h4><a href="" target="_blank">Банк Русский Стандарт</a></h4>
+                  <p>Руководство командой из 4 backend-разработчиков, обеспечение бесперебойной работы и обмена данными с бюро кредитных историй (БКИ) и другими источниками информации. Разрабатываю и поддерживаю интеграционные сервисы для получения данных через API, загрузки файлов, базы данных и парсинга HTML. Сопровождаю кредитный конвейер банка в части взаимодействия с БКИ и развиваю внутренний портал скоринга на базе MVC.</p>
+                  <div id="temp" class="d-flex flex-wrap justify-content-center ">
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">C#</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">.NET</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">.Net Framework</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">Transact-SQL</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">ASP.NET MVC</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">WebAPI</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">XSLT</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">ADO.NET</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">Entity Framework</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">git</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row px-3">
+                <div class="col-3">Июнь 2020&nbsp;&mdash; Март 2022</div>
+                <div class="col-9">
+                  <h4>Сбербанк - Технологии</h4>
+                  <p>Управлял командой из 5 backend-разработчиков, развивал заявочный комплекс для обработки заявок сотрудников СБТ, осуществлял интеграции внутренних систем (SAP, 1C и других), учет разработки продуктов и занятости команд, а также систему электронного документооборота. Курирую внутренние сайты СБТ и чат-бота ЕВА, предоставляющего справочную информацию на интранете. В сжатые сроки разработал модуль заявочного комплекса на основе микросервисов и BPM-движка, что сократило время добавления заявок вдвое. Создал сервис для сторонней медицинской организации, что позволило заключить новый договор.</p>
+                  <div id="temp" class="d-flex flex-wrap justify-content-center ">
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">C#</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">.NET Core</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">Transact-SQL</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">Sberflow BPMX</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">Jira</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">Confluence</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">Bitbucket</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">Figma</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">Jenkins</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">Grafana</span>
+                  </div>
+              </div>
+              <div class="row px-3">
+                <div class="col-3">Дек. 2018&nbsp;&mdash; Июнь 2020</div>
+                <div class="col-9">
+                  <h4>ТрансКапиталБанк</h4>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  <div id="temp" class="d-flex flex-wrap justify-content-center ">
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">C#</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">.NET Core</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">.NET Framework      </span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">Sberflow BPMX</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">Jira</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">git</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">git</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">git</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">git</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">git</span>
+                  </div>
+              </div>
+              <div class="row px-3">
+                <div class="col-3">Янв. 2015&nbsp;&mdash; Дек. 2018</div>
+                <div class="col-9">
+                  <h4>Кредитное бюро Русский Стандарт</h4>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  <div id="temp" class="d-flex flex-wrap justify-content-center ">
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">C#</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">.NET Core</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">Transact-SQL</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">Sberflow BPMX</span>
+                  </div>
+              </div>
+              <div class="row px-3">
+                <div class="col-3">Окт. 2012&nbsp;&mdash; Дек. 2014</div>
+                <div class="col-9">
+                  <h4>Direct Group</h4>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  <div id="temp" class="d-flex flex-wrap justify-content-center ">
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">C#</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">.NET Core</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">Transact-SQL</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">Sberflow BPMX</span>
+                  </div>
+              </div>
+              <div class="row px-3">
+                <div class="col-3">Нояб. 2011&nbsp;&mdash; Окт. 2012</div>
+                <div class="col-9">
+                  <h4>АйМаниБанк</h4>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  <div id="temp" class="d-flex flex-wrap justify-content-center ">
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">C#</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">.NET Core</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">Transact-SQL</span>
+                    <span class="badge text-bg-info rounded-pill me-2 mb-2">Sberflow BPMX</span>
+                  </div>
+              </div>
+            </div>
+            <h3 id="projects" class="header-responsive p-3">Проекты</h4>
+              <p class="px-3">Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque
+                laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae
+                vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut
+                fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro
+                quisquam est, qui dolorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam
+                eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima
+                veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi
+                consequatur? Quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae
+                consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur? At vero eos et accusamus et
+                iusto odio dignissimos ducimus, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos
+                dolores et quas molestias excepturi sint, obcaecati cupiditate non provident, similique sunt in culpa,
+                qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est
+                et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio, cumque nihil impedit,
+                quo minus id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, omnis dolor
+                repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet,
+                ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente
+                delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores
+                repellat.</p>
+              <h3 id="simple-list-item-4" class="header-responsive p-3">Item 4</h4>
+                <p class="px-3">Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque
+                  laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae
+                  vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut
+                  fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro
+                  quisquam est, qui dolorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non
+                  numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad
+                  minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea
+                  commodi consequatur? Quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil
+                  molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur? At vero eos et
+                  accusamus et iusto odio dignissimos ducimus, qui blanditiis praesentium voluptatum deleniti atque
+                  corrupti, quos dolores et quas molestias excepturi sint, obcaecati cupiditate non provident, similique
+                  sunt in culpa, qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem
+                  rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio,
+                  cumque nihil impedit, quo minus id, quod maxime placeat, facere possimus, omnis voluptas assumenda
+                  est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum
+                  necessitatibus saepe eveniet, ut et voluptates repudiandae sint et molestiae non recusandae. Itaque
+                  earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur
+                  aut perferendis doloribus asperiores repellat.</p>
+                <h3 id="simple-list-item-5" class="header-responsive p-3">Item 5</h4>
+                  <p class="px-3 pb-5">Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium
+                    doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi
+                    architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit,
+                    aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi
+                    nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit, amet, consectetur, adipisci
+                    velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat
+                    voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit
+                    laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit, qui in
+                    ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo
+                    voluptas nulla pariatur? At vero eos et accusamus et iusto odio dignissimos ducimus, qui blanditiis
+                    praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint,
+                    obcaecati cupiditate non provident, similique sunt in culpa, qui officia deserunt mollitia animi, id
+                    est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero
+                    tempore, cum soluta nobis est eligendi optio, cumque nihil impedit, quo minus id, quod maxime
+                    placeat, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem
+                    quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet, ut et voluptates
+                    repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut
+                    aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.
+                  </p>
       </div>
     </div>
   </div>
