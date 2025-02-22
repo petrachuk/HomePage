@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /.git/
 
 Sitemap: https://petrachuk.ru/sitemap.xml
