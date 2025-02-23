@@ -3,5 +3,6 @@ Allow: /
 Disallow: /.git/
 Disallow: /README.md
 Disallow: /.gitignore
+Disallow: /index.html
 
 Sitemap: https://petrachuk.ru/sitemap.xml
