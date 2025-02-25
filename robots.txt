@@ -1,8 +1,10 @@
 User-agent: *
 Allow: /
 Disallow: /.git/
-Disallow: /README.md
 Disallow: /.gitignore
+Disallow: /README.md
 Disallow: /index.html
+Disallow: /ru/index.html
+Disallow: /en/index.html
 
 Sitemap: https://petrachuk.ru/sitemap.xml
