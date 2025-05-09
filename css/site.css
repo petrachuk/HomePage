@@ -92,3 +92,7 @@ h4 {
     font-size: 0.75rem;
   }
 }
+
+.btn:hover h4 {
+  color: #5ECAED; /* Здесь указываем нужный цвет */
+}
