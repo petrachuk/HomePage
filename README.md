@@ -1,4 +1,4 @@
-# Alex Petrachuk's Homepage
+# Alexei Petrachuk's Homepage
 
 This is my personal homepage built using HTML, CSS, JavaScript, and Bootstrap. It serves as a simple way to showcase my profile, projects, and contact information.
 
