@@ -16,7 +16,7 @@ This is my personal homepage built using HTML, CSS, JavaScript, and Bootstrap. I
 
 ## Website
 
-[Visit my homepage](https://petrachuk.ru/)
+[Visit my homepage](https://petrachuk.com/)
 
 ## License
 

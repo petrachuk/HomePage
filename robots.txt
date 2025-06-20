@@ -7,4 +7,4 @@ Disallow: /index.html
 Disallow: /ru/index.html
 Disallow: /en/index.html
 
-Sitemap: https://petrachuk.ru/sitemap.xml
+Sitemap: https://petrachuk.com/sitemap.xml
