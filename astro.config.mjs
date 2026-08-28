@@ -1,8 +1,10 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
+import icon from 'astro-icon';
 
 export default defineConfig({
   output: 'static',
+  integrations: [icon()],
   // Provisional: matches the confirmed target URL structure (`/` = EN,
   // `/ru/` = RU), but the real localization/content model — how collection
   // entries link EN/RU versions, canonical URLs, hreflang — is designed in

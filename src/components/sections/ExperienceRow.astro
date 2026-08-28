@@ -1,0 +1,49 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+import TagPill from '@/components/primitives/TagPill.astro';
+
+export interface Props {
+  entry: CollectionEntry<'experience'>;
+  presentLabel: string;
+}
+
+const { entry, presentLabel } = Astro.props;
+const { title, subtitle, organization, dateStart, dateEnd, tags } = entry.data;
+
+const hasBody = entry.body != null && entry.body.trim().length > 0;
+const Content = hasBody ? (await render(entry)).Content : undefined;
+---
+
+<li
+  class="relative rounded-lg border border-transparent p-4 -m-4 transition-colors duration-200 ease-out-quart hover:border-border hover:bg-bg-elevated focus-within:border-border focus-within:bg-bg-elevated focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2 focus-within:ring-offset-bg"
+>
+  <p class="font-mono text-xs uppercase tracking-wide text-text-secondary">
+    {dateStart}–{dateEnd ?? presentLabel}
+  </p>
+  <h3 class="mt-1 text-base font-semibold text-text-primary">
+    <a
+      href={organization.url}
+      target="_blank"
+      rel="noopener"
+      class="static before:absolute before:inset-0 before:content-[''] hover:text-accent focus-visible:text-accent"
+      >{title} · {organization.name}</a
+    >
+    <Icon
+      name="lucide:arrow-up-right"
+      aria-hidden="true"
+      class="ml-1 inline-block h-4 w-4 text-text-secondary"
+    />
+  </h3>
+  {subtitle && <p class="mt-0.5 text-sm text-text-secondary">{subtitle}</p>}
+  {
+    Content && (
+      <div class="mt-2 space-y-2 text-sm text-text-secondary [&_a]:text-accent [&_a]:underline [&_a]:underline-offset-4">
+        <Content />
+      </div>
+    )
+  }
+  <div class="mt-3 flex flex-wrap gap-2">
+    {tags.map((tag) => <TagPill label={tag} />)}
+  </div>
+</li>

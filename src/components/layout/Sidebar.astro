@@ -1,0 +1,160 @@
+---
+import NavLink from '@/components/primitives/NavLink.astro';
+import SocialLinks from '@/components/SocialLinks.astro';
+import LanguageSwitcher from '@/components/layout/LanguageSwitcher.astro';
+import { useTranslations, type Locale } from '@/i18n/ui';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<header class="flex flex-col gap-8 py-8 lg:py-16">
+  <div>
+    <h1 class="text-2xl font-semibold text-text-primary">{t.sidebar.name}</h1>
+    <p class="mt-1 text-lg text-text-secondary">{t.sidebar.role}</p>
+    <p class="mt-4 max-w-xs text-sm text-text-secondary">{t.sidebar.pitch}</p>
+  </div>
+
+  <nav aria-label={t.nav.about} class="hidden flex-col gap-1 lg:flex">
+    <NavLink href="#about" sectionId="about" label={t.nav.about} active={true} />
+    <NavLink href="#experience" sectionId="experience" label={t.nav.experience} />
+    <NavLink href="#projects" sectionId="projects" label={t.nav.projects} />
+  </nav>
+
+  <div class="flex items-center gap-4">
+    <SocialLinks class="flex items-center gap-4" />
+    <LanguageSwitcher locale={locale} />
+  </div>
+</header>
+
+<script>
+  const SECTION_IDS = ['about', 'experience', 'projects'] as const;
+  type SectionId = (typeof SECTION_IDS)[number];
+
+  function isSectionId(value: string | null | undefined): value is SectionId {
+    return !!value && (SECTION_IDS as readonly string[]).includes(value);
+  }
+
+  const sections = SECTION_IDS.map((id) => document.getElementById(id)).filter(
+    (el): el is HTMLElement => el !== null,
+  );
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]');
+  const langLinks = document.querySelectorAll<HTMLAnchorElement>('[data-lang-switch-link]');
+
+  let activeId: SectionId = 'about';
+
+  function applyActive(id: SectionId) {
+    activeId = id;
+
+    navLinks.forEach((link) => {
+      const isActive = link.dataset.navLink === id;
+      link.dataset.active = isActive ? 'true' : 'false';
+      if (isActive) {
+        link.setAttribute('aria-current', 'true');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+
+    langLinks.forEach((link) => {
+      const base = link.dataset.baseHref ?? link.getAttribute('href') ?? '/';
+      link.href = id === 'about' ? base : `${base}#${id}`;
+    });
+  }
+
+  /*
+   * The active section is derived from scroll position rather than from
+   * IntersectionObserver events. An observer callback only receives the
+   * entries whose intersection state *changed* since the last callback,
+   * never the full set, so reconstructing "which section is in view" from
+   * one callback's entries loses sections that are still intersecting and
+   * leaves a stale item highlighted — it failed in both directions during
+   * QA. Reading the three rects against a fixed reference line is
+   * deterministic, correct scrolling either way, and correct at both
+   * ends of the page.
+   */
+  function resolveActiveFromScroll(): SectionId {
+    // A section becomes active as it crosses the upper third of the
+    // viewport. Kept above the halfway mark deliberately: About is shorter
+    // than half a tall viewport, so a line at 50% would sit past About's
+    // bottom even at scroll position 0 and About could never win.
+    const line = window.innerHeight * 0.33;
+
+    const first = sections[0];
+    const last = sections[sections.length - 1];
+
+    // Both ends of the page are clamped explicitly, because at either
+    // extreme the scroll position can't move far enough for the line rule
+    // to resolve the edge section on its own.
+    if (window.scrollY <= 2 && first && isSectionId(first.id)) {
+      return first.id;
+    }
+    const atBottom =
+      window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+    if (atBottom && last && isSectionId(last.id)) {
+      return last.id;
+    }
+
+    // The active section is the last one whose top has passed the line.
+    let current: SectionId = 'about';
+    for (const section of sections) {
+      if (section.getBoundingClientRect().top <= line && isSectionId(section.id)) {
+        current = section.id;
+      }
+    }
+    return current;
+  }
+
+  function syncFromScroll() {
+    const next = resolveActiveFromScroll();
+    if (next !== activeId) applyActive(next);
+  }
+
+  // Seed initial state from a known-good hash, falling back to `about` for
+  // anything unrecognized — an arbitrary window.location.hash must never
+  // become activeId directly.
+  const initialHash = window.location.hash.replace('#', '');
+  applyActive(isSectionId(initialHash) ? initialHash : 'about');
+
+  // Clicking a nav link updates the active state immediately, so the
+  // highlight lands before the smooth scroll finishes.
+  navLinks.forEach((link) => {
+    const id = link.dataset.navLink;
+    if (isSectionId(id)) {
+      link.addEventListener('click', () => applyActive(id));
+    }
+  });
+
+  // Back/forward navigation and manual address-bar hash edits don't fire
+  // a click on any nav link, so resolve those the same way as initial load.
+  window.addEventListener('hashchange', () => {
+    const hash = window.location.hash.replace('#', '');
+    applyActive(isSectionId(hash) ? hash : 'about');
+  });
+
+  if (sections.length > 0) {
+    // rAF-coalesced so a burst of scroll events costs at most one layout
+    // read per frame — three getBoundingClientRect calls, no other state.
+    let queued = false;
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(() => {
+          queued = false;
+          syncFromScroll();
+        });
+      },
+      { passive: true },
+    );
+
+    // Resolve once on load: a restored scroll position (reload mid-page,
+    // back navigation) must not leave the SSR default showing.
+    if (!isSectionId(initialHash)) syncFromScroll();
+  }
+</script>

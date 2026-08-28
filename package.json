@@ -13,8 +13,11 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@iconify-json/lucide": "^1.2.126",
+    "@iconify-json/simple-icons": "^1.2.93",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.9",
+    "astro-icon": "^1.2.0",
     "tailwindcss": "^4.3.3"
   },
   "allowScripts": {

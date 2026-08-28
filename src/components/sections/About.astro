@@ -1,0 +1,22 @@
+---
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+import SectionHeading from '@/components/primitives/SectionHeading.astro';
+import { useTranslations, type Locale } from '@/i18n/ui';
+
+export interface Props {
+  locale: Locale;
+  AboutContent: AstroComponentFactory;
+}
+
+const { locale, AboutContent } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section id="about" class="py-16 lg:pt-8">
+  <SectionHeading number="01" heading={t.nav.about} />
+  <div
+    class="mt-8 space-y-4 text-base text-text-secondary [&_a]:text-accent [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-accent/80 [&_a]:focus-visible:outline-2 [&_a]:focus-visible:outline-accent [&_a]:focus-visible:outline-offset-2"
+  >
+    <AboutContent />
+  </div>
+</section>

@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import SectionHeading from '@/components/primitives/SectionHeading.astro';
+import Button from '@/components/primitives/Button.astro';
+import ProjectCard from '@/components/sections/ProjectCard.astro';
+import { projectsCatalogUrl } from '@/data/links';
+import { useTranslations, type Locale } from '@/i18n/ui';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const entries = (await getCollection('projects')).filter((entry) => entry.data.locale === locale);
+---
+
+<section id="projects" class="py-16">
+  <SectionHeading number="03" heading={t.nav.projects} />
+  <ul class="mt-8 flex flex-col gap-6">
+    {entries.map((entry) => <ProjectCard entry={entry} />)}
+  </ul>
+  <p class="mt-8">
+    <Button href={projectsCatalogUrl} variant="ghost" target="_blank" rel="noopener"
+      >{t.projects.seeAll} → {t.projects.seeAllSuffix}</Button
+    >
+  </p>
+</section>

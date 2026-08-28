@@ -1,0 +1,43 @@
+---
+import SocialLinks from '@/components/SocialLinks.astro';
+import type { Locale } from '@/i18n/ui';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const linkClasses = 'text-accent underline underline-offset-4 hover:text-accent/80';
+---
+
+<footer class="border-t border-border py-8 text-sm text-text-secondary">
+  {
+    locale === 'en' ? (
+      <p>
+        Coded by hand in{' '}
+        <a href="https://astro.build/" target="_blank" rel="noopener" class={linkClasses}>
+          Astro
+        </a>{' '}
+        and{' '}
+        <a href="https://tailwindcss.com/" target="_blank" rel="noopener" class={linkClasses}>
+          Tailwind CSS
+        </a>
+        . Set in Inter and JetBrains Mono.
+      </p>
+    ) : (
+      <p>
+        Написано вручную на{' '}
+        <a href="https://astro.build/" target="_blank" rel="noopener" class={linkClasses}>
+          Astro
+        </a>{' '}
+        и{' '}
+        <a href="https://tailwindcss.com/" target="_blank" rel="noopener" class={linkClasses}>
+          Tailwind CSS
+        </a>
+        . Использованы шрифты Inter и JetBrains Mono.
+      </p>
+    )
+  }
+  <SocialLinks class="mt-4 flex items-center gap-4" />
+</footer>

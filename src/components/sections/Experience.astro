@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import SectionHeading from '@/components/primitives/SectionHeading.astro';
+import Button from '@/components/primitives/Button.astro';
+import ExperienceRow from '@/components/sections/ExperienceRow.astro';
+import { resumeUrl } from '@/data/links';
+import { useTranslations, type Locale } from '@/i18n/ui';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const entries = (await getCollection('experience'))
+  .filter((entry) => entry.data.locale === locale)
+  .sort((a, b) => Number(b.data.dateStart) - Number(a.data.dateStart));
+---
+
+<section id="experience" class="py-16">
+  <SectionHeading number="02" heading={t.nav.experience} />
+  <ol class="mt-8 flex flex-col gap-6">
+    {entries.map((entry) => <ExperienceRow entry={entry} presentLabel={t.experience.present} />)}
+  </ol>
+  <p class="mt-8">
+    <Button href={resumeUrl} variant="ghost" target="_blank" rel="noopener"
+      >{t.experience.viewFullResume}</Button
+    >
+  </p>
+</section>

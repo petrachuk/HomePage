@@ -2,10 +2,11 @@
 export interface Props {
   href: string;
   label: string;
+  sectionId: string;
   active?: boolean;
 }
 
-const { href, label, active = false } = Astro.props;
+const { href, label, sectionId, active = false } = Astro.props;
 
 /*
  * Active state is conveyed by three simultaneous, non-motion cues
@@ -13,15 +14,25 @@ const { href, label, active = false } = Astro.props;
  * correctly for keyboard/screen-reader users and under
  * `prefers-reduced-motion`. The translate flourish is purely decorative
  * and gated behind `motion-safe:` — it never carries meaning on its own.
+ *
+ * The active/inactive classes are always both present, keyed off the
+ * `data-active` attribute rather than a server-rendered ternary, so a
+ * runtime scroll-spy script can flip one attribute per link without
+ * having to re-derive this class list in JS.
  */
 const classes = [
-  'flex items-center gap-2 border-l-2 py-1 pl-2 text-sm uppercase tracking-wide',
+  'flex items-center gap-2 border-l-2 border-transparent py-1 pl-2 text-sm uppercase tracking-wide text-text-secondary',
   'transition-colors duration-200 ease-out-quart motion-safe:transition-transform',
   'hover:text-accent focus-visible:text-accent focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2',
-  active
-    ? 'border-accent font-semibold text-accent motion-safe:translate-x-2'
-    : 'border-transparent text-text-secondary',
+  'data-[active=true]:border-accent data-[active=true]:font-semibold data-[active=true]:text-accent',
+  'motion-safe:data-[active=true]:translate-x-2',
 ].join(' ');
 ---
 
-<a href={href} aria-current={active ? 'true' : undefined} class={classes}>{label}</a>
+<a
+  href={href}
+  data-nav-link={sectionId}
+  data-active={active ? 'true' : 'false'}
+  aria-current={active ? 'true' : undefined}
+  class={classes}>{label}</a
+>
