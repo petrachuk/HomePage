@@ -1,0 +1,27 @@
+---
+export interface Props {
+  href: string;
+  label: string;
+  active?: boolean;
+}
+
+const { href, label, active = false } = Astro.props;
+
+/*
+ * Active state is conveyed by three simultaneous, non-motion cues
+ * (weight, color, a static left border) plus `aria-current`, so it reads
+ * correctly for keyboard/screen-reader users and under
+ * `prefers-reduced-motion`. The translate flourish is purely decorative
+ * and gated behind `motion-safe:` — it never carries meaning on its own.
+ */
+const classes = [
+  'flex items-center gap-2 border-l-2 py-1 pl-2 text-sm uppercase tracking-wide',
+  'transition-colors duration-200 ease-out-quart motion-safe:transition-transform',
+  'hover:text-accent focus-visible:text-accent focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2',
+  active
+    ? 'border-accent font-semibold text-accent motion-safe:translate-x-2'
+    : 'border-transparent text-text-secondary',
+].join(' ');
+---
+
+<a href={href} aria-current={active ? 'true' : undefined} class={classes}>{label}</a>

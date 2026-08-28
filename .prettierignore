@@ -1,0 +1,10 @@
+dist
+.astro
+node_modules
+
+# Legacy static site — being retired over later milestones, not reformatted
+en
+ru
+css
+js
+index.html

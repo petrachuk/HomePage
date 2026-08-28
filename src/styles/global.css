@@ -1,0 +1,90 @@
+@import 'tailwindcss';
+
+/*
+ * Dark theme only — deliberate, not deferred (see DESIGN-SYSTEM.md §3.1).
+ * There is exactly one palette in this file, no `dark:` variant is ever
+ * written anywhere in this project, and color never reads
+ * `prefers-color-scheme`. `prefers-reduced-motion` below is the one
+ * intentional exception — it governs motion/accessibility only, never color.
+ */
+
+@theme {
+  /* --- color --- */
+  --color-bg: #0a0e14;
+  --color-bg-elevated: #10151d;
+  --color-text-primary: #e6e9ef;
+  --color-text-secondary: #8b93a7;
+  --color-border: #1e2530;
+
+  /*
+   * Accent — finalized after a side-by-side pick against three tints in the
+   * current site's existing cyan/sky family (css/site.css:97 anchored
+   * `#5ECAED` as candidate A). #64D9F1 (candidate B) was chosen — ~11.7:1
+   * contrast against --color-bg, ~11.1:1 against --color-bg-elevated, both
+   * comfortably clear of WCAG AA. Recorded in DESIGN-SYSTEM.md §3.1.
+   */
+  --color-accent: #64d9f1;
+
+  /*
+   * Type families — Inter chosen over IBM Plex Sans after a side-by-side
+   * EN/RU comparison. Both candidates ship genuine native Cyrillic (not a
+   * synthetic/faux fallback), so this was a design pick, not a coverage
+   * one — recorded in DESIGN-SYSTEM.md §3.2. JetBrains Mono was never in
+   * contention (the named, uncontested monospace pick).
+   */
+  --font-sans: 'InterVariable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrainsMonoVariable', ui-monospace, 'Cascadia Code', monospace;
+
+  /* --- type scale (6 steps, generous line-height for +10-15% RU length) --- */
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.6;
+  --text-base: 1rem;
+  --text-base--line-height: 1.7;
+  --text-lg: 1.25rem;
+  --text-lg--line-height: 1.6;
+  --text-xl: 1.75rem;
+  --text-xl--line-height: 1.3;
+  --text-2xl: 2.25rem;
+  --text-2xl--line-height: 1.2;
+
+  /* --- spacing: Tailwind v4 default base unit, kept explicit --- */
+  --spacing: 0.25rem;
+
+  /* --- motion --- */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@font-face {
+  font-family: 'InterVariable';
+  src: url('/fonts/inter/InterVariable-latin-cyrillic.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrainsMonoVariable';
+  src: url('/fonts/jetbrains-mono/JetBrainsMonoVariable-latin-cyrillic.woff2')
+    format('woff2-variations');
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+}

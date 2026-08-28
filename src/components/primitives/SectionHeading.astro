@@ -1,0 +1,16 @@
+---
+export interface Props {
+  /** e.g. "01" — the trailing dot is added by the component */
+  number: string;
+  heading: string;
+  id?: string;
+}
+
+const { number, heading, id } = Astro.props;
+---
+
+<h2 id={id} class="flex items-center gap-4 text-xl font-semibold text-text-primary">
+  <span class="font-mono text-base text-accent" aria-hidden="true">{number}.</span>
+  {heading}
+  <span class="h-px flex-1 bg-border" aria-hidden="true"></span>
+</h2>

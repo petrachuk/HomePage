@@ -10,3 +10,11 @@
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+# Node / Astro
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
