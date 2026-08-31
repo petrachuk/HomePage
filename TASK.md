@@ -110,8 +110,14 @@ written.
 
 ## Domain routing (confirmed)
 
-- `petrachuk.com/` → English (default locale, no path prefix)
+- `petrachuk.com/en/` → English
 - `petrachuk.com/ru/` → Russian
+- `petrachuk.com/` → neither: a `noindex` language-selection stub that
+  redirects to `/en/` or `/ru/`. English was moved off the bare root once
+  automatic language selection became a requirement — `/` cannot be both the
+  canonical English URL and a visitor-dependent entry point. `hreflang`
+  alternates run between `/en/` and `/ru/`, with `x-default` → `/en/`; `/` is
+  never an hreflang or canonical target.
 - `petrachuk.ru/*` → already 301-redirects to `petrachuk.com` via nginx
   (existing setup, confirmed by owner). Whether to later make it
   locale-aware (`petrachuk.ru/*` → `petrachuk.com/ru/*`) is an open
@@ -163,3 +169,10 @@ written.
 - Whether profile photos (`images/alex*.jpg`) should appear anywhere in the
   new layout (current design uses them only in JSON-LD, not visually) or stay
   metadata-only.
+
+### Resolved during M5
+
+- JSON-LD `dateModified` (`profileDates.modified` in `src/data/seo.ts`): the
+  legacy value stays untouched through M5 and is set **in M6, by hand, to the
+  date the redesigned site actually goes live**. It remains a manually
+  maintained constant after that — never a build or deploy timestamp.

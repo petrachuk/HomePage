@@ -8,7 +8,11 @@ export interface Props {
 
 const { locale } = Astro.props;
 
-const linkClasses = 'text-accent underline underline-offset-4 hover:text-accent/80';
+// Focus ring matches every other interactive element on the page — one accent
+// focus treatment site-wide, per DESIGN-SYSTEM.md §9. Without it these two
+// links fell back to the browser's own white ring.
+const linkClasses =
+  'text-accent underline underline-offset-4 hover:text-accent/80 focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2';
 ---
 
 <footer class="border-t border-border py-8 text-sm text-text-secondary">

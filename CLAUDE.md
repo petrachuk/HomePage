@@ -80,7 +80,10 @@ Primary jobs the site must do:
 - Astro Content Collections for Experience and Projects, per locale (see
   Content architecture below — About is intentionally *not* a collection)
 - Astro built-in i18n (`astro:i18n`): `locales: ['en', 'ru']`,
-  `defaultLocale: 'en'`, `prefixDefaultLocale: false`
+  `defaultLocale: 'en'`, `prefixDefaultLocale: true` → `/en/` serves English,
+  `/ru/` serves Russian, and `/` is a `noindex` language-selection stub (see
+  Pages / routes below). `redirectToDefaultLocale` is deliberately unset — it
+  runs only in the SSR request pipeline and is inert in a static build.
 - Prettier + `prettier-plugin-astro`
 - `astro-icon` for all icons (GitHub, Stack Overflow, LinkedIn, Telegram,
   external-link glyph) — replace the current inline `<symbol>` sprite
@@ -121,10 +124,24 @@ modified as part of this codebase.
 
 ## Pages / routes
 
-### `/` (EN) and `/ru/` (RU)
+### `/` (language selection)
 
-Single long-scroll page per locale (matches the current site — no need to
-split into multi-page routes). Sections, in nav order:
+Not a content page and not a second copy of the English one. A minimal
+standalone `noindex` stub (`src/pages/index.astro`) — no `BaseLayout`, no
+`global.css`, no SEO component — that reads `navigator.language`, sends `ru*`
+to `/ru/` and everything else to `/en/` via `location.replace()`, and renders
+plain links to both locales so it still works without JavaScript. It carries no
+canonical, hreflang, Open Graph, or JSON-LD.
+
+A static build cannot negotiate `Accept-Language`, so selection is client-side
+here; an nginx `map` + 302 can supersede this file later with no change to this
+repo.
+
+### `/en/` (EN) and `/ru/` (RU)
+
+The two indexable content routes. Single long-scroll page per locale (matches
+the current site — no need to split into multi-page routes). Sections, in nav
+order:
 
 #### Intro / sidebar (fixed on desktop, top block on mobile)
 
@@ -196,7 +213,9 @@ Each entry: title, description, tag pills, link icon to the GitHub repo.
 
 ## SEO requirements
 
-- `hreflang` (`en`, `ru`, `x-default`) between `/` and `/ru/`.
+- `hreflang` (`en`, `ru`, `x-default`) between `/en/` and `/ru/`, with
+  `x-default` → `/en/`. `/` is never an hreflang target — it is a redirect
+  stub, not a representation of the content.
 - Per-locale meta title/description — written for that language's search
   intent, not translated 1:1 from the other locale's English SEO copy.
 - Open Graph + Twitter Card tags per locale, using **one static image**
@@ -206,9 +225,11 @@ Each entry: title, description, tag pills, link icon to the GitHub repo.
   schema (see current `en/index.html` bottom `<script type="application/ld+json">`)
   — update `sameAs`, `image`, and dates as needed; validate with a
   structured-data testing tool before shipping.
-- `sitemap.xml` via `@astrojs/sitemap`, `robots.txt` updated to match the new
-  route structure (drop the old `Disallow` entries that only made sense for
-  the JS-redirect root — `/` will be directly crawlable EN content now).
+- Sitemap via `@astrojs/sitemap` (emits `sitemap-index.xml` +
+  `sitemap-0.xml`, not `sitemap.xml`), listing exactly `/en/` and `/ru/` with
+  reciprocal locale alternates. `robots.txt` updated to match the new route
+  structure: the old `Disallow` entries are dropped — they only made sense for
+  the legacy JS-redirect root, and the new `/` stub carries its own `noindex`.
 - Yandex Metrika: confirm with the owner whether to keep it at all on the
   redesigned site (not architecturally required). If kept, carry forward the
   existing counter ID and load it in the least render-blocking way possible

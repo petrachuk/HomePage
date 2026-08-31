@@ -1,5 +1,6 @@
 ---
 import { useTranslations, type Locale } from '@/i18n/ui';
+import { localePaths } from '@/i18n/routes';
 
 export interface Props {
   locale: Locale;
@@ -8,8 +9,19 @@ export interface Props {
 const { locale } = Astro.props;
 const t = useTranslations(locale);
 
-const basePaths: Record<Locale, string> = { en: '/', ru: '/ru/' };
 const otherLocale: Locale = locale === 'en' ? 'ru' : 'en';
+
+/*
+ * The visible text is just the language code ("EN"/"RU"), so the accessible
+ * name has to start with that code — WCAG 2.5.3 Label in Name: a voice-control
+ * user says what they see. Composed here rather than baked into the i18n
+ * strings so the code keeps coming from `otherLocale`, its single source.
+ *
+ * Without this the RU page failed the check outright ("EN" is nowhere in
+ * "Переключиться на английский"), and EN only passed by accident — "ru"
+ * happens to be a substring of "Switch to Russian".
+ */
+const switchLabel = `${otherLocale.toUpperCase()} — ${t.sidebar.langSwitchLabel}`;
 
 const linkClasses =
   'rounded-full px-3 py-1 text-text-secondary transition-colors duration-200 ease-out-quart hover:text-accent focus-visible:text-accent focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2';
@@ -23,9 +35,9 @@ const linkClasses =
   <span aria-current="true" class="rounded-full bg-accent px-3 py-1 text-bg">{locale}</span>
   <a
     data-lang-switch-link
-    data-base-href={basePaths[otherLocale]}
-    href={basePaths[otherLocale]}
-    aria-label={t.sidebar.langSwitchLabel}
+    data-base-href={localePaths[otherLocale]}
+    href={localePaths[otherLocale]}
+    aria-label={switchLabel}
     class={linkClasses}>{otherLocale}</a
   >
 </div>

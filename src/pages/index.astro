@@ -1,6 +1,40 @@
 ---
-import PageBody from '@/components/PageBody.astro';
-import { Content as AboutContent } from '@/content-pages/about/en.md';
+/*
+ * Language-selection stub. Not a content page.
+ *
+ * `/` exists only to route a visitor who typed the bare domain to their
+ * language. It carries `noindex` and deliberately has no canonical, hreflang,
+ * Open Graph, or JSON-LD: the indexable representations are `/en/` and
+ * `/ru/`, and `/` must never compete with them.
+ *
+ * Standalone markup on purpose — no BaseLayout, no global.css, no Seo
+ * component, no design system. A static build cannot negotiate
+ * Accept-Language (Astro's `redirectToDefaultLocale` runs only in the SSR
+ * request pipeline), so selection happens client-side here. An nginx
+ * `map` + 302 can supersede this file later without any change to this repo.
+ *
+ * The plain links below are the no-JS path: with scripting off or broken the
+ * page still navigates to either locale.
+ */
+import { localePaths } from '@/i18n/routes';
 ---
 
-<PageBody locale="en" AboutContent={AboutContent} />
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Alexei Petrachuk</title>
+  </head>
+  <body>
+    <p>
+      <a href={localePaths.en} lang="en">English</a>
+      &middot;
+      <a href={localePaths.ru} lang="ru">Русский</a>
+    </p>
+    <script is:inline define:vars={{ localePaths }}>
+      var lang = navigator.language || '';
+      location.replace(lang.toLowerCase().startsWith('ru') ? localePaths.ru : localePaths.en);
+    </script>
+  </body>
+</html>
