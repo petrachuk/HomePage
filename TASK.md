@@ -11,10 +11,13 @@ Domains:
 
 ## Context
 
-The current site (`en/index.html`, `ru/index.html`, `css/site.css`) is a
+The previous site (`en/index.html`, `ru/index.html`, `css/site.css`) was a
 hand-built Bootstrap 5 dark-theme page the owner made himself without a web
-design background. It works and its information architecture is sound, but
-it looks dated and was never SEO/perf-tuned beyond the basics. This task
+design background. It worked and its information architecture was sound, but
+it looked dated and was never SEO/perf-tuned beyond the basics. Those files
+were deleted from the working tree once the rebuild replaced them; they remain
+the content baseline of record in git history, last present in commit
+`3dbb304` (`git show 3dbb304:en/index.html`). This task
 replaces the visual design and technical implementation while keeping the
 content (résumé facts, project list, social links) essentially intact.
 
@@ -64,7 +67,8 @@ actually got built.
 
 ## Content migration map
 
-Source of truth for content: current `en/index.html` and `ru/index.html`.
+Source of truth for content: the legacy `en/index.html` and `ru/index.html`,
+now in git history (see Context above).
 Do not invent new career facts — extract and restructure what's already
 written.
 
@@ -165,8 +169,9 @@ written.
   `../DESIGN-SYSTEM.md` §7 "Hosting").
 - Whether to keep Yandex Metrika on the redesigned site at all.
 - Whether to keep the "battle royale games" custom-cursor easter egg from the
-  current About copy, or drop it in the new visual system.
-- Whether profile photos (`images/alex*.jpg`) should appear anywhere in the
+  About copy, or drop it in the new visual system. Its cursor asset was kept
+  and moved to `public/images/fortnite.png`; nothing references it yet.
+- Whether profile photos (`public/images/alex*.jpg`) should appear anywhere in the
   new layout (current design uses them only in JSON-LD, not visually) or stay
   metadata-only.
 

@@ -6,9 +6,17 @@ petrachuk.com / petrachuk.ru
 
 Personal homepage and portfolio of Alex Petrachuk, a backend/infrastructure
 engineer. This is a from-scratch visual and technical redesign of the
-existing site (Bootstrap-based, see current `en/index.html` / `ru/index.html`
-for the content baseline) — content and information architecture largely
+existing site (Bootstrap-based) — content and information architecture largely
 carry over, execution does not.
+
+**Where the legacy site went.** Its files (`en/index.html`, `ru/index.html`,
+`css/site.css`, `js/script.js`, and the old root
+`index.html`/`robots.txt`/`sitemap.xml`) were deleted from the working tree
+once the rebuild replaced them. They remain the content baseline of record and
+live in git history — last present in commit `3dbb304`. Read one with
+`git show 3dbb304:en/index.html` whenever a migration question needs the
+original wording. Every reference to them below means that, not a file on
+disk.
 
 **Read `../DESIGN-SYSTEM.md` first.** It defines the shared visual language,
 type, color, motion, and component conventions across the whole Petrachuk web
@@ -60,9 +68,10 @@ Primary jobs the site must do:
 6. Content fidelity is non-negotiable: migration may restructure, shorten,
    or improve the wording of existing copy, but must never add claims,
    technologies, responsibilities, achievements, dates, employers, metrics,
-   or any other fact that isn't already present in the current
-   `en/index.html` / `ru/index.html`. If something reads as underwhelming,
-   flag it for the owner to rewrite — don't embellish it.
+   or any other fact that isn't already present in the legacy
+   `en/index.html` / `ru/index.html` (git history — see Project above). If
+   something reads as underwhelming, flag it for the owner to rewrite — don't
+   embellish it.
 7. Dark theme only — no theme switcher, no reading of `prefers-color-scheme`.
    This is a deliberate, settled decision (see `../DESIGN-SYSTEM.md` §3.1),
    not something to reconsider mid-build.
@@ -148,8 +157,8 @@ order:
 - Name, role line ("Backend Developer" / equivalent RU), one-sentence pitch
   (reuse/tighten the existing meta description copy).
 - In-page nav: About, Experience, Projects — scroll-spy active state.
-- Social icon row: GitHub, Stack Overflow, LinkedIn, Telegram (URLs already
-  in current `en/index.html` — carry over).
+- Social icon row: GitHub, Stack Overflow, LinkedIn, Telegram (URLs carried
+  over from the legacy `en/index.html`; they now live in `src/data/links.ts`).
 - Language switcher: pill toggle, not the current floating box that overlaps
   content on mobile. Preserve current section on switch where feasible.
 
@@ -186,7 +195,8 @@ Data-driven timeline (content collection entry per role), each with:
 
 Migrate all existing roles as-is (Russian Standard Bank, SberTech,
 TRANSKAPITALBANK, Russian Standard Credit Bureau, Direct Group, iMoneyBank —
-see current `en/index.html` for full text/dates/tags per role). Keep the
+see the legacy `en/index.html` for full text/dates/tags per role; the
+migrated entries live in `src/content/experience/`). Keep the
 "View full résumé" outbound link (currently hh.ru) at the end of the section.
 
 ---
@@ -219,10 +229,10 @@ Each entry: title, description, tag pills, link icon to the GitHub repo.
 - Per-locale meta title/description — written for that language's search
   intent, not translated 1:1 from the other locale's English SEO copy.
 - Open Graph + Twitter Card tags per locale, using **one static image**
-  (existing `images/alex1x1.jpg`/`alex4x3.jpg`/`alex16x9.jpg` or a refreshed
+  (`public/images/alex1x1.jpg`/`alex4x3.jpg`/`alex16x9.jpg` or a refreshed
   equivalent) — no dynamic/per-page OG image generation for v1.
 - JSON-LD: carry forward and validate the existing `ProfilePage`/`Person`
-  schema (see current `en/index.html` bottom `<script type="application/ld+json">`)
+  schema (see the legacy `en/index.html` bottom `<script type="application/ld+json">`)
   — update `sameAs`, `image`, and dates as needed; validate with a
   structured-data testing tool before shipping.
 - Sitemap via `@astrojs/sitemap` (emits `sitemap-index.xml` +

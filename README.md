@@ -1,31 +1,39 @@
-# Alexei Petrachuk's Homepage
+# petrachuk.com
 
-This is my personal homepage built using HTML, CSS, JavaScript, and Bootstrap. It serves as a simple way to showcase my profile, projects, and contact information.
+Personal homepage and portfolio of Alexei Petrachuk — a bilingual (EN/RU),
+statically generated single-page site.
 
-## Features
+- `/en/` and `/ru/` are the two indexable content routes.
+- `/` is a `noindex` stub that picks a language client-side and redirects.
 
-- **Responsive Design** – Adapted for different screen sizes using Bootstrap.
-- **Clean UI** – Minimalistic design.
+## Stack
 
-## Technologies Used
+Astro (static output), TypeScript in strict mode, Tailwind CSS v4 configured
+CSS-first via `@theme`. Experience and Projects live in Astro content
+collections, one entry per role/project with an EN and a RU file. Fonts are
+self-hosted and subset to Latin + Cyrillic.
 
-- HTML5
-- CSS3
-- JavaScript
-- Bootstrap
+## Commands
 
-## Website
+| Command | Does |
+|---|---|
+| `npm run dev` | Dev server |
+| `npm run check` | `astro check` plus a content-collection validator |
+| `npm run build` | Static build into `dist/` |
+| `npm run preview` | Serve the built `dist/` |
+| `npm run format` | Prettier |
 
-[Visit my homepage](https://petrachuk.com/)
+Node 22.12 or newer (see `.nvmrc`).
 
-## License
+## Where things are
 
-This project is open-source and available under the [MIT License](LICENSE).
+- `src/i18n/routes.ts` — the single source of locale URLs. Canonical,
+  hreflang, `og:url`, the sitemap and the language switcher all resolve
+  through it.
+- `src/data/links.ts` — the single source of social/outbound URLs.
+- `src/components/Seo.astro` — the entire `<head>` for both content routes.
+- `src/content/` — Experience and Projects entries.
+- `src/content-pages/about/` — About copy per locale.
 
-## Contact
-
-If you have any questions or suggestions, feel free to reach out!
-
----
-
-Happy coding! 🚀
+`CLAUDE.md` is the authoritative spec for this repo; `TASK.md` tracks the
+rebuild milestones.
