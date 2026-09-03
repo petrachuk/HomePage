@@ -199,9 +199,6 @@ and do not "fix" a deferred one without being asked.
   the OG tags) or stay metadata-only. Related to the item above — a decision
   to show a photo raises the resolution problem from "affects link previews"
   to "affects the page itself".
-- **Yandex Metrika.** Whether to keep it on the redesigned site at all. Not
-  architecturally required; it is currently not present in the rebuild.
-
 ### Known defects, deferred by decision
 
 - **D3 — dead CSS utilities generated from prose.** Tailwind v4 scans the
@@ -267,3 +264,44 @@ and do not "fix" a deferred one without being asked.
   set to `2026-09-03T14:30:00+03:00` — the actual go-live time (see "Blocks
   go-live" above). Stays a manually maintained constant from here on, per
   the standing rule; only the value itself was unresolved.
+- **Yandex Metrika — kept, owner decision.** Counter ID `102895123` (same as
+  the legacy site, one counter for both locales) carried forward into
+  `src/data/analytics.ts` + `src/components/YandexMetrika.astro`, included
+  from `BaseLayout.astro` so it only ever renders on `/en/`/`/ru/`, never on
+  the `/` stub. Initialization is deferred past the `window` `load` event
+  (not just `async`) so the fetch of `tag.js` never competes with page
+  resources during first paint — `document.readyState === 'complete'` covers
+  the rare case where `load` already fired before the script ran.
+
+  Measured (local Lighthouse, mobile, same build with/without the snippet):
+  TBT 130ms → 330ms, Performance 54 → 48, Best Practices 81 → 77. The
+  Best Practices drop traces to one console error —
+  `net::ERR_ADDRESS_INVALID` on `mc.yandex.ru` — which is this dev sandbox's
+  own blocked network egress to that host, not a defect; it won't occur in
+  production, where the host is reachable. The Lighthouse numbers themselves
+  are further contaminated in this environment by a system-wide AdGuard
+  script injection (`local.adguard.org`) unrelated to the site, present in
+  every local run regardless of this change — not a trustworthy standalone
+  baseline either way, only the relative TBT delta above is trustworthy.
+
+  Tried to get a clean, uncontaminated number from PageSpeed Insights
+  against the live `https://petrachuk.com/ru/` and hit a dead end worth
+  recording so it isn't re-investigated blindly: PSI reported it couldn't
+  reach the URL. Ruled out: the site itself (a direct external fetch to
+  both `/en/` and `/ru/` returned 200 with correct content), and DNS (this
+  dev machine's own local resolver is itself intercepted — likely a
+  system-level AdGuard DNS, not just the browser extension — and returned
+  bogus answers, `petrachuk.com` → `192.168.1.254`, `www.petrachuk.com` →
+  `0.0.0.0`, with `fake-for-negative-caching.adguard.com` as the SOA; a
+  direct query to `8.8.8.8` gave the correct answer, `petrachuk.com` → A
+  `91.247.250.230`, `www` → CNAME to the apex, no `AAAA` record at all so
+  an IPv4/IPv6 mismatch isn't possible either). Nothing resembling a PSI
+  crawl attempt appears in `petrachuk.error.log` around the failure, which
+  suggests the request didn't reach nginx — most likely either a transient
+  Google-side PSI issue, or the `limit_req zone=one burst=20 nodelay;` /
+  `limit_conn addr 20;` pair in `sites-enabled/petrachuk.com` rejecting part
+  of the burst PSI issues when it loads the page plus every asset near-
+  simultaneously (the zone's actual rate wasn't retrieved —
+  `limit_req_zone` is defined outside the file that was shared). Owner
+  decision: ship as implemented without waiting on this to resolve; revisit
+  if it turns out to affect real visitors, not just PSI's crawler.
