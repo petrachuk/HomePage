@@ -23,7 +23,19 @@ self-hosted and subset to Latin + Cyrillic.
 | `npm run preview` | Serve the built `dist/` |
 | `npm run format` | Prettier |
 
-Node 22.12 or newer (see `.nvmrc`).
+Node 24 (`.nvmrc`) is the version this project is developed and built
+against; `engines.node` in `package.json` states the supported floor,
+`>=22.12.0`.
+
+## CI
+
+`.github/workflows/build.yml` runs `npm ci`, `npm run check` and
+`npm run build` on every push to `main` and every pull request, on the Node
+version named in `.nvmrc`, and uploads `dist/` as a build artifact.
+
+That artifact is where this repo's responsibility ends. Getting `dist/` onto
+the nginx docroot is a separate, undecided infrastructure concern — see
+`../DESIGN-SYSTEM.md` §7 "Hosting".
 
 ## Where things are
 

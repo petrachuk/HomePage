@@ -1,0 +1,55 @@
+# Build the static site and publish `dist/` as an artifact.
+#
+# This is the whole of this repo's CI. It deliberately stops at the artifact:
+# how `dist/` reaches the nginx docroot on the owner's home server (self-hosted
+# runner, SSH/rsync, tunnel, manual copy) is an unmade infrastructure decision
+# and must not be encoded here. See ../DESIGN-SYSTEM.md §7 "Hosting" and
+# TASK.md milestone 6.
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Nothing here writes to the repo, and no step needs a token.
+permissions:
+  contents: read
+
+# A branch that gets several pushes in a row only needs its newest build.
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      # `.nvmrc` is the single source of the Node version — not a literal
+      # repeated here, which would silently drift from it. `engines.node` in
+      # package.json states the supported floor (>=22.12.0); `.nvmrc` names the
+      # major this project is actually developed and built against.
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      # `npm ci` and not `npm install`: it installs the lockfile exactly and
+      # fails if package.json and package-lock.json disagree.
+      - run: npm ci
+
+      # astro check (types) plus scripts/validate-content.mjs, which enforces
+      # that every Experience/Projects entry exists in both locales.
+      - run: npm run check
+
+      - run: npm run build
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: dist
+          path: dist/
+          # A green build that uploaded nothing is a failure, not a success.
+          if-no-files-found: error
