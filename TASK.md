@@ -150,7 +150,8 @@ written.
 5. **QA** — Lighthouse (mobile) on both locales, keyboard-only pass,
    `prefers-reduced-motion` check, RU string-length layout check, structured
    data validator.
-6. **Build (CI) + hand off for deploy** — GitHub Actions runs install,
+6. **Build (CI) + hand off for deploy** — done, in
+   `.github/workflows/build.yml`. GitHub Actions runs install,
    typecheck, and build, producing a `dist/` artifact. That's the boundary of
    this milestone. How `dist/` reaches the nginx host on the owner's home
    Ubuntu server is a separate infrastructure decision — see
@@ -159,25 +160,106 @@ written.
 
 ---
 
-## Open questions for the owner (not blocking design/build start, but needed before ship)
+## Open questions for the owner
 
-- Deploy mechanics: how should the built `dist/` artifact actually reach the
-  nginx docroot on the home server (self-hosted Actions runner, exposed
+All six milestones are built. Nothing below is a milestone or blocked on
+further build work — each is a decision only the owner can make. This list is
+the carry-forward record for later sessions: do not silently close an item,
+and do not "fix" a deferred one without being asked.
+
+### Blocks go-live
+
+- **Deploy mechanics.** How should the built `dist/` artifact actually reach
+  the nginx docroot on the home server (self-hosted Actions runner, exposed
   SSH/rsync, tunnel, manual copy)? Plus: the docroot path for this site, and
   how the current site gets deployed today. This is an infrastructure
   decision, not something to default into during the site build (see
-  `../DESIGN-SYSTEM.md` §7 "Hosting").
-- Whether to keep Yandex Metrika on the redesigned site at all.
-- Whether to keep the "battle royale games" custom-cursor easter egg from the
-  About copy, or drop it in the new visual system. Its cursor asset was kept
-  and moved to `public/images/fortnite.png`; nothing references it yet.
-- Whether profile photos (`public/images/alex*.jpg`) should appear anywhere in the
-  new layout (current design uses them only in JSON-LD, not visually) or stay
-  metadata-only.
+  `../DESIGN-SYSTEM.md` §7 "Hosting"). CI stops at the artifact by design —
+  `.github/workflows/build.yml` must not acquire a delivery step until this
+  is answered.
+- **JSON-LD `dateModified`** (`profileDates.modified` in `src/data/seo.ts`).
+  Still the legacy value `2025-06-20T10:01:00+03:00`. Set by hand to the date
+  the redesigned site actually goes live, then keep it a manually maintained
+  constant — never a build or deploy timestamp, and a rebuild with no content
+  change must not move it. Deferred out of M6 by the owner because no deploy
+  date exists yet.
+
+### Content and presentation
+
+- **OG image quality.** `public/images/alex16x9.jpg` is **667x375** — above
+  the Open Graph minimum of 600x315 but well below the ideal 1200x630, so
+  link previews upscale it. Recorded in `src/data/seo.ts` as an accepted
+  trade-off shipped by owner decision; it has never been resolved as a
+  quality question. Fixing it means a higher-resolution source image, which
+  only the owner can supply. Note the other two crops are small for the same
+  reason: `alex1x1.jpg` is 500x500 and `alex4x3.jpg` is 577x433. Do not
+  regenerate or upscale any of them without being asked.
+- **Profile photos in the layout.** Whether `public/images/alex*.jpg` should
+  appear anywhere visually (the current design uses them only in JSON-LD and
+  the OG tags) or stay metadata-only. Related to the item above — a decision
+  to show a photo raises the resolution problem from "affects link previews"
+  to "affects the page itself".
+- **Yandex Metrika.** Whether to keep it on the redesigned site at all. Not
+  architecturally required; it is currently not present in the rebuild.
+
+### Known defects, deferred by decision
+
+- **D3 — dead CSS utilities generated from prose.** Tailwind v4 scans the
+  whole repository, so words in non-source files become real utilities in the
+  shipped bundle. Two are present: `.truncate` (47 bytes, from the word in
+  `CLAUDE.md`) and `.contents` (27 bytes, from `permissions: contents: read`
+  in `.github/workflows/build.yml`, added in M6). Neither is referenced by
+  anything in `src/`. The only fix is an `@source` directive in the CSS —
+  i.e. a build-config change — which the owner deferred. Measured, not
+  estimated: removing the workflow file takes the bundle from 17 739 to
+  17 712 bytes.
+
+  Practical consequence for anyone editing this repo: the wording of these
+  very documents can change the shipped CSS. Writing this section originally
+  added a third utility, from an ordinary English verb in the deploy bullet
+  above, and the sentence was rephrased to remove it. Rebuild and compare
+  `dist/` after editing any tracked Markdown file.
+
+### Not a defect (recorded so it is not re-investigated)
+
+- **Line endings.** The repo has no `.gitattributes` and `core.autocrlf=true`
+  is set system-wide on the owner's Windows machine, so a fresh Windows clone
+  checks out `robots.txt` and the font `OFL.txt` files as CRLF while the git
+  blobs are LF. A Linux runner checks out LF and produces the byte-identical
+  artifact this project verified in M6. Harmless; a one-line
+  `* text=auto eol=lf` would pin it if the divergence ever becomes annoying.
+- **`[WARN] [astro-icon] Failed to load icons from "src/icons"`.** Emitted by
+  every build, locally and in CI. `src/icons/` does not exist on purpose —
+  all icons come from the `@iconify-json` packages. Does not affect output.
+- **`README.md` does not pass `prettier --check`.** Pre-existing, from the
+  unaligned Commands table; `npm run format` fixes it whenever someone wants
+  the diff noise.
 
 ### Resolved during M5
 
-- JSON-LD `dateModified` (`profileDates.modified` in `src/data/seo.ts`): the
-  legacy value stays untouched through M5 and is set **in M6, by hand, to the
-  date the redesigned site actually goes live**. It remains a manually
-  maintained constant after that — never a build or deploy timestamp.
+- JSON-LD `dateModified` — the decision to set it by hand rather than from a
+  build timestamp still stands; the value itself is still unset and has moved
+  to "Blocks go-live" above.
+
+### Resolved 2026-09-03
+
+- **Custom-cursor easter egg.** Kept, and reimplemented. The "battle royale
+  games" (EN) / "королевской битве" (RU) phrase is wrapped in
+  `<span class="cursor-easter-egg">` in `about/en.md` and `about/ru.md`,
+  styled in `src/styles/global.css`: `cursor: url('/images/fortnite.png') 64
+  64, auto` (hotspot centered on the badge — the legacy rule left it unset,
+  defaulting to the image's 0,0 corner) plus `color:
+  var(--color-text-primary)` to brighten the phrase against the muted About
+  paragraph, replacing the legacy hardcoded `color: #fff`.
+  `public/images/fortnite.png` is referenced again; CSS bundle went from
+  17 739 to 17 834 bytes (+95 bytes, the new rule). Verified in a real
+  browser (CDP) on both locales: computed `cursor` resolves to the image
+  with the 64 64 hotspot, and the RU phrase (which wraps to two lines at
+  narrower widths) keeps the effect on both line fragments.
+
+  Two sub-decisions the owner confirmed explicitly: keep the asset at
+  128×128/35.4 KB as shipped (a GDI+ re-encode measured 64×64 ≈ 10.7 KB and
+  32×32 ≈ 3.1 KB as the cost of shrinking it, for the record, but the owner
+  chose not to); and add no visual hint beyond the existing brighter text —
+  the color contrast against the muted paragraph is the only affordance,
+  same as the legacy site.

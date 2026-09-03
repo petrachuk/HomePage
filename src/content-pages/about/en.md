@@ -4,4 +4,4 @@ Currently, I'm Head of the Data Integration Center at [Russian Standard Bank](ht
 
 I've built backend solutions across a wide range of teams — from [large enterprises](https://sbertech.ru/) and startups to small groups focused on digital products.
 
-In my free time, I enjoy running, cycling, reading technical books, spending time with my family, or honing my survival skills in battle royale games.
+In my free time, I enjoy running, cycling, reading technical books, spending time with my family, or honing my survival skills in <span class="cursor-easter-egg">battle royale games</span>.

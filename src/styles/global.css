@@ -83,6 +83,20 @@ body {
   font-family: var(--font-sans);
 }
 
+/*
+ * About easter egg (custom-cursor in the legacy site, css/site.css:60-63).
+ * Brightens the phrase against the muted About paragraph the same way the
+ * legacy `color: #fff` did against `.text-muted` — text-primary, not accent,
+ * since accent is reserved for links/nav/focus (see the `[&_a]` rule in
+ * About.astro). Hotspot 64 64 centers the pointer on the badge's visual
+ * center; the legacy rule left it unset, defaulting to the image's 0,0
+ * corner.
+ */
+.cursor-easter-egg {
+  color: var(--color-text-primary);
+  cursor: url('/images/fortnite.png') 64 64, auto;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto !important;
