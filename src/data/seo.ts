@@ -42,16 +42,14 @@ export const profileDates = {
   created: '2025-06-20T10:01:00+03:00',
 
   /*
-   * Still the legacy value, deliberately. The owner decided during the M5 QA
-   * pass that this constant is updated once, by hand, in M6 — set to the date
-   * the redesigned site actually goes live. It was not touched in M5, and it
-   * is not a leftover to be "cleaned up" by anyone reading this earlier.
+   * Set by hand on the date the redesigned site actually went live
+   * (confirmed working at https://petrachuk.com/ru/ after fixing a docroot
+   * permissions issue on the host — not a build or deploy timestamp).
    *
-   * It stays a manually maintained constant afterwards. Never `new Date()`, a
+   * Stays a manually maintained constant from here on. Never `new Date()`, a
    * build timestamp, or a filesystem mtime: a rebuild with no content change
-   * must not move it, and shipping a milestone is not by itself a reason to
-   * bump it. After the M6 deploy, update it only when the profile/page content
+   * must not move it. Update it only when the profile/page content
    * materially changes.
    */
-  modified: '2025-06-20T10:01:00+03:00',
+  modified: '2026-09-03T14:30:00+03:00',
 } as const;

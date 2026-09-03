@@ -169,20 +169,20 @@ and do not "fix" a deferred one without being asked.
 
 ### Blocks go-live
 
-- **Deploy mechanics.** How should the built `dist/` artifact actually reach
-  the nginx docroot on the home server (self-hosted Actions runner, exposed
-  SSH/rsync, tunnel, manual copy)? Plus: the docroot path for this site, and
-  how the current site gets deployed today. This is an infrastructure
-  decision, not something to default into during the site build (see
-  `../DESIGN-SYSTEM.md` §7 "Hosting"). CI stops at the artifact by design —
-  `.github/workflows/build.yml` must not acquire a delivery step until this
-  is answered.
-- **JSON-LD `dateModified`** (`profileDates.modified` in `src/data/seo.ts`).
-  Still the legacy value `2025-06-20T10:01:00+03:00`. Set by hand to the date
-  the redesigned site actually goes live, then keep it a manually maintained
-  constant — never a build or deploy timestamp, and a rebuild with no content
-  change must not move it. Deferred out of M6 by the owner because no deploy
-  date exists yet.
+- **Deploy mechanics — docroot known, delivery still manual.** The site went
+  live 2026-09-03 at `/var/www/HomePage` on the home server (confirmed via
+  the live nginx config: `root /var/www/HomePage;` under the `petrachuk.com`
+  server block, `sites-enabled/petrachuk.com`). First deploy was a manual
+  copy of `dist/`'s contents; hit one snag — the top-level copied directory
+  landed as `drw-r--r--` (no `x` anywhere, not even for the owning
+  `www-data`), which blocks directory traversal and produced `stat() ...
+  Permission denied` in `petrachuk.error.log` on every `/ru/`/`/en/`
+  request. Fixed with `chmod 755 /var/www/HomePage`; not an nginx config
+  problem — the `location /ru/`/`location /en/` blocks were already correct.
+  Owner has said this will be automated later — CI still stops at the
+  `dist/` artifact by design (see `../DESIGN-SYSTEM.md` §7 "Hosting"), and
+  `.github/workflows/build.yml` must not acquire a delivery step until that
+  automation decision is made.
 
 ### Content and presentation
 
@@ -263,3 +263,7 @@ and do not "fix" a deferred one without being asked.
   chose not to); and add no visual hint beyond the existing brighter text —
   the color contrast against the muted paragraph is the only affordance,
   same as the legacy site.
+- **JSON-LD `dateModified`.** `profileDates.modified` in `src/data/seo.ts`
+  set to `2026-09-03T14:30:00+03:00` — the actual go-live time (see "Blocks
+  go-live" above). Stays a manually maintained constant from here on, per
+  the standing rule; only the value itself was unresolved.
